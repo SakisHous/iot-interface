@@ -3,7 +3,7 @@
 
 This is a demonstration of a remote control panel. It is built with [Expressjs](https://expressjs.com/) and [Socketio](https://socket.io/) for the back end. In addition,  for the presentation of the data we used the open source [Chartjs](https://www.chartjs.org/) library. A demonstration of user interface (UI) is shown bellow.
 
-![alt text](https://github.com/SakisHous/Remote-Control-Panel/blob/master/images/Home%20Environment.png?raw=true)
+![alt text](https://github.com/SakisHous/iot-interface/tree/master/images)
 
 The purpose of this repo is not to demonstrate a SCADA software, rather than a simple platform for IoT applications related to small businesses. Good examples are agriculture sector and smart buildings where you can monitor the environmental conditions, switch on/off water heater or electric water valve.
 
