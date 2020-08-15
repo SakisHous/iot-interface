@@ -17,7 +17,7 @@ For the data acquisition we used ESP8266 module running  MQTT protocol and BME28
 There are other options varied with the range such as GSM, SigFox and LoRa which the device could support. The right option is a result of many factors with the most important the economic factor.
 
 
-## Implementtion machine learning algorithms
+## Implemention machine learning algorithms
 
 Collecting enough data and making a training set you can train your own model and predict features important for each case. This business model is applied in many sectors such as agriculture or utilities (energy consumption).
 
