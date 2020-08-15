@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>Control 1</h1>
+  <div class="header">Switch on or off ESP8266's LED</div>
+  <div>
+    <button id="on">ON</button>
+    <button id="off">OFF</button>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="temperature-chart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="humidity-chart"></canvas>
+  </div>
+
+  <div class="second-chart-container">
+    <canvas id="pressure-chart"></canvas>
+  </div>
+
+  <div class="second-chart-container">
+    <canvas id="altitude-chart"></canvas>
+  </div>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    (function () {
+      var socket = io({ transports: ['websocket'], upgrade: false });
+
+      var numberElements = 50;
+      var dataCount = 0;
+
+      var tChart = document.getElementById("temperature-chart");
+      var hChart = document.getElementById("humidity-chart");
+      var pChart = document.getElementById("pressure-chart");
+      var aChart = document.getElementById("altitude-chart");
+
+      var commonOptions = {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              displayFormats: {
+                millisecond: 'mm:ss:SSS'
+              }
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        legend: { display: false },
+        tooltips: {
+          enabled: false
+        }
+      };
+
+      var temperatureChart = new Chart(tChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Temperature",
+            data: 0,
+            fill: false,
+            borderColor: '#343e9a',
+            borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "Temperature (C)",
+            fontSize: 18
+          }
+        })
+      });
+
+      var humidityChart = new Chart(hChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Humidity",
+            data: 0,
+            fill: false,
+            borderColor: '#343e9a',
+            borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "Humidity (%)",
+            fontSize: 18
+          }
+        })
+      });
+
+      var pressureChart = new Chart(pChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Pressure",
+            data: 0,
+            fill: false,
+            borderColor: '#343e9a',
+            borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "Pressure (hPa)",
+            fontSize: 18
+          }
+        })
+      });
+
+      var altitudeChart = new Chart(aChart, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Altitude",
+            data: 0,
+            fill: false,
+            borderColor: '#343e9a',
+            borderWidth: 1
+          }]
+        },
+        options: Object.assign({}, commonOptions, {
+          title: {
+            display: true,
+            text: "Altitude (m)",
+            fontSize: 18
+          }
+        })
+      });
+
+      function addData(msg) {
+        console.log(typeof msg.pressure);
+        temperatureChart.data.labels.push(new Date());
+        temperatureChart.data.datasets.forEach((dataset) => { dataset.data.push(msg.temperature.toString()) });
+        humidityChart.data.labels.push(new Date());
+        humidityChart.data.datasets.forEach((dataset) => { dataset.data.push(msg.humidity.toString()) });
+        pressureChart.data.labels.push(new Date());
+        pressureChart.data.datasets.forEach((dataset) => { dataset.data.push(msg.pressure.toString()) });
+        altitudeChart.data.labels.push(new Date());
+        altitudeChart.data.datasets.forEach((dataset) => { dataset.data.push(msg.altitude.toString()) });
+
+        if (dataCount > numberElements) {
+          temperatureChart.data.labels.shift();
+          temperatureChart.data.datasets[0].data.shift();
+          humidityChart.data.labels.shift();
+          humidityChart.data.datasets[0].data.shift();
+          pressureChart.data.labels.shift();
+          pressureChart.data.datasets[0].data.shift();
+          altitudeChart.data.labels.shift();
+          altitudeChart.data.datasets[0].data.shift();
+        }
+        else dataCount++;
+
+        temperatureChart.update();
+        humidityChart.update();
+        pressureChart.update();
+        altitudeChart.update();
+
+      };
+
+      socket.on('data', (msg) => {
+        console.log(msg);
+        if (msg) {
+          addData(msg);
+        }
+
+      });
+
+      let onbtn = document.querySelector('#on');
+      let offbtn = document.querySelector('#off');
+
+      onbtn.addEventListener('click', () => {
+        console.log('Open LED');
+        socket.emit('openMsg', "1");
+      });
+
+      offbtn.addEventListener('click', () => {
+        console.log('Close LED');
+        socket.emit('closeMsg', "0");
+      });
+
+    })();
+
+
+  </script>
+</body>
+
+</html>

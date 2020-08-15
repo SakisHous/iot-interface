@@ -1,0 +1,64 @@
+:root {
+	--bg_color: #efefef;
+	--light_text: #a39d9e;
+	--dark_text: #363b41;
+	--active_color_dark: #ff8494;
+	--active_color_light: #ffa9b7;
+	box-sizing: border-box;
+	font-size: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--bg_color);
+}
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.header {
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
+button {
+  width: 4em;
+  height: 4em;
+  font-size: 1.2em;
+  margin: 1em;
+  border-radius: 50%;
+  text-align: center;
+  text-decoration: none;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  box-shadow: 4px 4px 15px -5px black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.chart-container {
+  box-shadow: 0px 0px 35px -10px black;
+  background-color: white;
+  margin: 1.5em;
+  width: 500px;
+  height: 300px;
+  display: inline-block;
+}
+
+.second-chart-container {
+  box-shadow: 0px 0px 35px -10px black;
+  background-color: white;
+  margin: 1.5em;
+  width: 500px;
+  height: 300px;
+  display: inline-block;
+}
