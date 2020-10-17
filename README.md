@@ -16,12 +16,6 @@ For the data acquisition we used ESP8266 module running  MQTT protocol and BME28
 
 There are other options varied with the range such as GSM, SigFox and LoRa which the device could support. The right option is a result of many factors with the most important the economic factor.
 
-
-## Implemention machine learning algorithms
-
-Collecting enough data and making a training set you can train your own model and predict features important for each case. This business model is applied in many sectors such as agriculture or utilities (energy consumption).
-
-
 ## Next steps
 
-Some of the next steps are a database connection (preferably MongoDB) for storage, an authentication system (user should have an account), a more robust and secure websocket implementation and HTTP GET/POST request for adding new data.
+Some of the next steps to improve this small project, are a database connection (preferably MongoDB) for storage, an authentication system (user should have an account), a more robust and secure websocket implementation and HTTP GET/POST request for adding new data.
